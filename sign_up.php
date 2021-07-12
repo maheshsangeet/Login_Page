@@ -1,3 +1,10 @@
+<?php
+
+session_start();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +21,67 @@
 
 </head>
 <body>
+
+
+    <?php 
+            include 'dbcon.php';
+
+        if (isset($_POST['submit'])) {
+            $username = mysqli_real_escape_string($con, $_POST['username']);
+            $email = mysqli_real_escape_string($con, $_POST['email']);
+            $mobile = mysqli_real_escape_string($con, $_POST['mobile']);
+            $password = mysqli_real_escape_string($con, $_POST['password']);
+            $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
+            
+
+
+            // password encryptions
+            $pass = password_hash( $password, PASSWORD_BCRYPT);
+            $cpass = password_hash( $cpassword, PASSWORD_BCRYPT);
+            
+
+            // checking email more then once
+            $emailquery = "select * from registration where email = '$email'";   //selecting email from registration db 
+            $query = $con->query($emailquery);                                   //query sends to db
+
+                
+            if ($con->affected_rows > 0) {                                        //email verifying
+                ?>
+                    <script>alert ("email already exist");</script> 
+                <?php 
+            }
+            else {
+                if ($password === $cpassword) {                                    //password matching
+                    $insertquery = "insert into registration (username, email, mobile, password, cpassword) values('$username','$email','$pass','$cpass')";
+
+                    $iquery = mysqli_query($con,$insertquery);
+
+                    if ($iquery) {
+                        ?> 
+                        <script>alert("inserted successful");</script>
+                        <?php
+                    }
+                    else {
+                        ?> 
+                        <script>alert("not inserted");</script>
+                        <?php
+                    }
+                }
+                else {
+                    ?>
+                        <script> alert('password not matching')</script>
+                    <?php
+                }
+            }
+        }
+
+
+    ?>
+
+
+
+
+
     <div class="container">
     <br>
 
@@ -22,26 +90,30 @@
                 <h4 class="card-title mt-3 text-center">Create Account</h4>
                 <p class="text-center">Get started with your free account</p>
                 <p>
-                    <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
+                    <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Gmail</a>
                     <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>
                 </p>
                 <p class="divider-text">
                     <span class="bg-light">OR</span>
                 </p>
 
-                <form>
+                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?> " method="POST" >
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Full name" type="text">
-                    </div> <!-- form-group// -->
+                        <input class="form-control" placeholder="Full name" type="text" name="username" required>
+                    </div> <!-- form-group  fullname// --> 
+
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                         </div>
-                        <input name="" class="form-control" placeholder="Email address" type="email">
-                    </div> <!-- form-group// -->
+                        <input class="form-control" placeholder="Email address" type="email" name="email" required>
+                    </div> <!-- form-group  email// -->
+
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
@@ -52,33 +124,28 @@
                             <option value="2">+919</option>
                             <option value="3">+918</option> -->
                         </select>
-                        <input name="" class="form-control" placeholder="Phone number" type="text">
-                    </div> <!-- form-group// -->
-                    <div class="form-group input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"> <i class="fa fa-building"></i> </span>
-                        </div>
-                        <select class="form-control">
-                            <option selected=""> Select job type</option>
-                            <option>Designer</option>
-                            <option>Manager</option>
-                            <option>Accaunting</option>
-                        </select>
-                    </div> <!-- form-group end.// -->
+                        <input class="form-control" placeholder="Phone number" type="number" name="mobile" required>
+                    </div> <!-- form-group number// -->
+
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
-                        <input class="form-control" placeholder="Create password" type="password">
-                    </div> <!-- form-group// -->
+                        <input class="form-control" placeholder="Create password" type="password" name="password" required>
+                    </div> <!-- form-group passord// -->
+
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                         </div>
-                        <input class="form-control" placeholder="Repeat password" type="password">
-                    </div> <!-- form-group// -->                                      
+                        <input class="form-control" placeholder="Repeat password" type="password" name="cpassword" required>
+                    </div> <!-- form-group cpassword// -->     
+                    
+                    
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+                        <button type="submit" name="submit" class="btn btn-primary btn-block"> Create Account  </button>
                     </div> <!-- form-group// -->      
                     <p class="text-center">Have an account? <a href="">Log In</a> </p>                                                                 
                 </form>
