@@ -1,6 +1,9 @@
 <?php
 
 session_start();
+// if (!isset ($_SESSION['username'])){
+//     header('location:login.php');
+// }
 
 ?>
 <!DOCTYPE html>
@@ -38,10 +41,16 @@ session_start();
                  
                 $db_pass = $email_pass['password'];
 
+                $_SESSION['username'] = $email_pass['username'];      //used in home.php 
+
                 $pass_decode  = password_verify($password, $db_pass);
                 if ($pass_decode) {
                     ?>
-                        <script>alert('login successful');</script>
+                        <script>
+                                alert('login successful');
+                                location.replace("home.php");
+                        </script>
+                        
                     <?php
                 }
                 else {
@@ -99,7 +108,7 @@ session_start();
                     
                     
                     <div class="form-group">
-                        <button type="submit" name="submit" class="btn btn-primary btn-block"> Login  </button>
+                        <button type="submit" name="submit" class="btn btn-primary btn-block"> Login  </button> 
                     </div> <!-- form-group// -->      
                     <p class="text-center">Not have an account? <a href="sign_up.php">SignUp here</a> </p>                                                                 
                 </form>

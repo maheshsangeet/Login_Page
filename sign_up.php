@@ -148,7 +148,7 @@ session_start();
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-primary btn-block"> Create Account  </button>
                     </div> <!-- form-group// -->      
-                    <p class="text-center">Have an account? <a href="logins.php">Log In</a> </p>                                                                 
+                    <p class="text-center">Have an account? <a href="login.php">Log In</a> </p>                                                                 
                 </form>
 
             </article>
