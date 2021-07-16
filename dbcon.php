@@ -1,6 +1,5 @@
 
 <!-- connection to database -->
-
 <?php 
 
 $server = "localhost";
@@ -9,8 +8,10 @@ $password = "";
 $db = "sign_up";
 
 
-$con = mysqli_connect($server, $user, $password,$db);
+// mysqli_connect() function opens a new connection to the MySQL server.
+$con = mysqli_connect($server, $user, $password,$db);   
 
+// Check connection
 if ($con) {
     ?>
         <script> alert('connection successfull')</script>
@@ -22,4 +23,17 @@ else {
     <?php
 }
 
+//mysqli_connect_errno() function returns the error code from the last connection error, if any.
+
+// if (mysqli_connect_errno()) {
+//     echo "Failed to connect to MySQL: " . mysqli_connect_error();
+//     exit();
+//   }
+
+
+
+
+
 ?>
+
+

@@ -17,7 +17,7 @@ session_start();
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-    <link rel="stylesheet" href="sign_up.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
@@ -41,18 +41,19 @@ session_start();
             
 
             // checking email more then once
-            $emailquery = "select * from registration where email = '$email'";   //selecting email from registration db 
-            $query = $con->query($emailquery);                                   //query sends to db
+            $emailquery = "SELECT * FROM registration where email = '$email'";   //selecting email from registration db 
+            // $query = $con->query($emailquery);                                   //query sends to db
+            $query = mysqli_query($con,$emailquery);
+            $affect_row = mysqli_affected_rows ($con); 
 
-                
-            if ($con->affected_rows > 0) {                                        //email verifying
+            if ($affect_row > 0) {                                        //email verifying
                 ?>
                     <script>alert ("email already exist");</script> 
                 <?php 
             }
             else {
                 if ($password === $cpassword) {                                    //password matching
-                    $insertquery = "insert into registration (username, email, mobile, password, cpassword) values('$username','$email','$pass','$cpass')";
+                    $insertquery = "INSERT INTO registration (username, email, mobile, password, cpassword) values('$username','$email','$pass','$cpass')";
 
                     $iquery = mysqli_query($con,$insertquery);
 
@@ -90,7 +91,7 @@ session_start();
                 <h4 class="card-title mt-3 text-center">Create Account</h4>
                 <p class="text-center">Get started with your free account</p>
                 <p>
-                    <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Gmail</a>
+                    <a href="" class="btn btn-block btn-google"> <i class="fab fa-google"></i>   Login via Gmail</a>
                     <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via facebook</a>
                 </p>
                 <p class="divider-text">
@@ -147,7 +148,7 @@ session_start();
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-primary btn-block"> Create Account  </button>
                     </div> <!-- form-group// -->      
-                    <p class="text-center">Have an account? <a href="">Log In</a> </p>                                                                 
+                    <p class="text-center">Have an account? <a href="logins.php">Log In</a> </p>                                                                 
                 </form>
 
             </article>
