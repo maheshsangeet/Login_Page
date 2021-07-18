@@ -8,7 +8,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Login page</title>
+  <title>Sign up page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -41,9 +41,9 @@ session_start();
             
 
             // checking email more then once
-            $emailquery = "SELECT * FROM registration where email = '$email'";   //selecting email from registration db 
-            // $query = $con->query($emailquery);                                   //query sends to db
-            $query = mysqli_query($con,$emailquery);
+            $emailquery = "SELECT * FROM registration where email = '$email'";    //selecting email from registration db,  query
+            // $query = $con->query($emailquery);                                   
+            $query = mysqli_query($con,$emailquery);                             //query sends to db
             $affect_row = mysqli_affected_rows ($con); 
 
             if ($affect_row > 0) {                                        //email verifying
@@ -53,8 +53,7 @@ session_start();
             }
             else {
                 if ($password === $cpassword) {                                    //password matching
-                    $insertquery = "INSERT INTO registration (username, email, mobile, password, cpassword) values('$username','$email','$pass','$cpass')";
-
+                    $insertquery = "INSERT INTO registration (username, email, mobile, password, cpassword) values('$username','$email','$pass','$cpass')";                             //query
                     $iquery = mysqli_query($con,$insertquery);
 
                     if ($iquery) {
@@ -119,12 +118,6 @@ session_start();
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                         </div>
-                        <select class="custom-select" style="max-width: 120px;">
-                            <option selected="">+91</option>
-                            <!-- <option value="1">+917</option>
-                            <option value="2">+919</option>
-                            <option value="3">+918</option> -->
-                        </select>
                         <input class="form-control" placeholder="Phone number" type="number" name="mobile" required>
                     </div> <!-- form-group number// -->
 
@@ -148,7 +141,7 @@ session_start();
                     <div class="form-group">
                         <button type="submit" name="submit" class="btn btn-primary btn-block"> Create Account  </button>
                     </div> <!-- form-group// -->      
-                    <p class="text-center">Have an account? <a href="login.php">Log In</a> </p>                                                                 
+                    <p class="text-center">Have an account? <a href="logins.php">Log In</a> </p>                                                                 
                 </form>
 
             </article>
