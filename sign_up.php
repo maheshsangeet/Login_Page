@@ -4,20 +4,18 @@ session_start();
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Sign up page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Sign up page</title>
 
 </head>
 <body>
@@ -52,8 +50,9 @@ session_start();
                 <?php 
             }
             else {
-                if ($password === $cpassword) {                                    //password matching
-                    $insertquery = "INSERT INTO registration (username, email, mobile, password, cpassword) values('$username','$email','$pass','$cpass')";                             //query
+                if($password===$cpassword){
+                    //password matching
+                    $insertquery ="insert into registration (username, email, mobile, password, cpassword) values ('$username','$email','$mobile','$pass','$cpass' )";                             //query
                     $iquery = mysqli_query($con,$insertquery);
 
                     if ($iquery) {
@@ -79,9 +78,6 @@ session_start();
     ?>
 
 
-
-
-
     <div class="container">
     <br>
 
@@ -97,7 +93,8 @@ session_start();
                     <span class="bg-light">OR</span>
                 </p>
 
-                <form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?> " method="POST" >
+                <form action="./index.php" method="POST" >
+                
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
