@@ -20,7 +20,7 @@
 <body>
       </input>
         <button type="submit">
-            <a href="logins.php" type="button">Log Out</a>
+            <a href="index.php" type="button">Log Out</a>
         </button>
 
 </body>
